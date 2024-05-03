@@ -24,3 +24,10 @@
 - ทดลองพัฒนา Backgroud/Schedule Process ด้วย Hangfire
 - ทดลองสร้างระบบ Health Check UI ด้วย AspNetCore.Diagnostics.HealthChecks
 - ปรียบเทียบสิ่งที่ทำไปทั้งหมดในบทความกับ The Twelve Factors App
+
+
+# บทที่ 4 - source code structure
+## 1. domain - ดูแล entity database 
+## 2. core - main logic หลักของระบบใช้ในการกำหนด interface ใน part ของ Infra
+## 3. Infra - นำ Interface จาก Core มา Implement , ทำให้ระบบเชื่อมต่อกับ thrid-party 
+## 4. Api - เป็นเส้นเชื่อมต่อกับข้อมูลภายในระบบ
