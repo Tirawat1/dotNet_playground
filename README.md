@@ -107,3 +107,61 @@ public class PositionOptions
 ![ภาพปลากรอบ_1](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*IzwsWjSXKMY4AVahRKjE7g.png)
 
 ---
+# บทที่ 7 
+## Dependency Injection 
+```
+    มันคือการสร้าง object โดยเป็นการลด การ Coupling(การผูกติดกัน) ของ Class โดยการ inject dependency เข้าไปใน class เลย
+    สรุปได้ว่าเป็นเทคนิคในการเขียนโปรแกรมโดยใช้การส่งต่อ inject ตัว dependency แทนการสร้าง denpendency ขึ้นมาใหม่
+```
+ex.
+```
+    // class without using dependency injection
+    class WithoutDependencyInjection{
+        Dependency dependency;
+        WhithOutDependencyInjection(){
+            dependency = new Dependency();
+        }
+    }
+    class with using dependency injection
+    class WithoutDependencyInjection{
+        Dependency dependency;
+        WhithOutDependencyInjection(Dependency dependency){
+            this.dependency = dependency
+        }
+    }
+
+```
+
+## Service Lifetime
+### introduction
+- Dependency Inversion Principle : software design principle ที่แนะนำชี้ให้เห็นถึงปัญหาเกี่ยวกับ dependency แต่ไม่ได้บอกว่าใช้เทคนิคอะไรแก้ปัญหา
+- Inversion of control (IoC) : คือการนำ dependency Inversion Principle มากำหนดแนวทางให้ components อ้างอิงในการพัฒนา abstraction แทนการใช้ concrete Implementation 
+https://pro7beginner.blogspot.com/2014/08/interface-abstract-concrete-class.html อันนีอธิบายเรื่อง class ดี
+- Dependency Injection (DI) : Design Pattern ในการนำ IoC มาพัฒนา โดยใช้ Inject Concrete Implementation ระหว่าง Components
+- IoC Container (DI Container) : Framework ที่ช่วยทำ DI ใน .net core ซึ่งใน .net มี Build-In IoC Container (DI Container) ที่ช่วยในการลดขั้นตอน ลด Code ในการพัฒนา DI ซึ่งเราต้องเรียนรู้การจัดการ state ของ Components เรียกว่า Service Lifetimes
+
+### Service Lifetime Types
+- Transient
+    - เป็นการสร้าง Instance ที่จะถูกสร้างใหม่ทุกครั้งเมื่อมีการเรียก
+    - คำสั่ง build in คือ AddTransient เพื่อทำ DI แบบ Transient Lifetime
+    - Transient services จะถูก Disposed หลังจากที่จบ 1 Request
+- Scoped
+    - Instance จะถูกสร้างใหม่ทุกครั้งที่มี Client Request (1 Connection = 1 Client Request)
+    - เหมาะสำหรับการทำงานในเรื่อง stateful เช่น Entity Framework (AddDbContext)
+    - คำสั่ง build in คือ AddScoped เพื่อทำ Scoped Lifetime
+    - Scoped services จะถูก Disposed หลังจาก 1 Client request
+- Singleton
+    - Instance จะถูกสร้างครั้งแรกที่ถูกเรียกหลังจากนั้น Instance จะคงอยู่ตลอดไปจนกว่าจะปิดระบบ
+    - เหมาะสำหรับงานที่มีการ Reuse Instace เดิมอยุ่ตลอด ex. logging , Caching
+    - ใช้คำสั่ง AddSingleton เพื่อทำ DI แบบ Singleton Lifetime
+---
+หลังจากนี้จะเป็นการลองเขียน project ซึ่งถ้ามีการใช้ เทคนิค หรือ เกล็ดความรู้ใดๆจะเอามาเขียนในนี้
+## Repository Pattern
+```
+    เป็นการ design เพื่อใช้แยก logic ในการเข้าถึง datasource โดยมี Repository Interface คั่น ในการติดต่อระหว่าง Business layer กับ Data source 
+```
+![ภาพปลากรอบ 2](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*V3NoXGjKVjFfcLvLJn0Mtg.png)
+### หลักการในการเลือกใช้
+```
+    การสร้าง Method ของ Interface คือการตั้งคำถามว่า Business layer ต้องการข้อมูลอะไรบ้างจาก Data source ให้ส่งกลับมาด้วยวิธีการใด และอยู่ในรูป Data model อะไร
+```
