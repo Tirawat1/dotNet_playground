@@ -34,6 +34,7 @@
 
 ## cmd for 
 ### dotnet new classlib - เป็นการสร้าง lib ใหม่ใน folder; -n เป็นการ ตั้งชื่อ folder
+### dotnet new webapi -n ; -n เป็นการตั้งชื่อ
 ### dotnet sln add - เป็นการแอด solution 
 
 ### dotnet add reference - เป็นการ reference this folder(project) to 'API'   
